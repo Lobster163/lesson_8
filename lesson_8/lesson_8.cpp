@@ -51,7 +51,68 @@ int main()
             cout <<"Ex " << ex.m_x << endl;
         }
     }
-
-
     std::cout << "---------------------------" << endl;
+
+    std::cout << "punkt_3:" << endl;
+    Robot* robot = new Robot(0, 0);
+    int cmd;
+    bool game = true;
+   
+    
+    while (game)
+    {
+        
+        system("cls");
+        cout << "press button \"Enter\" ror \"Esc\" for exit" << endl;
+        robot->PrintDeck(); //рисуем доску
+        
+        cmd = _getch();    
+        try
+        {
+            switch (cmd)
+            {
+            case 72:
+                robot->ChangePosition(CMD::up);
+                break;
+            case 80:
+                robot->ChangePosition(CMD::down);
+                break;
+            case 75:
+                robot->ChangePosition(CMD::left);
+                break;
+            case 77:
+                robot->ChangePosition(CMD::right);
+                break;
+            case 27: //Esc
+            case 13: //exit enter
+                game = false;
+                break;
+            }
+        }
+        catch (OffTheField& exOffTheField)
+        {
+            position = { 0, 11 };
+            SetConsoleCursorPosition(hConsole, position);
+            cout << "Out of range matrix" << endl;            
+            cout << "Current Position (x:"<<exOffTheField.m_pos_x+1;
+            cout << ", y:" << exOffTheField.m_pos_y+1 <<")" << endl;
+            cout << "CMD-> " << GetNameCMD(exOffTheField.m_cmd) << endl;
+            system("pause");
+
+        }
+        catch (IllegalCommand& exIllegalCommand)
+        {
+
+        }
+
+    }
+    system("cls");
+    //robot->PrintDeck();
+    delete robot;
+    std::cout << "---------------------------" << endl;
+}
+
+void ExceptionFunct()
+{
+
 }
